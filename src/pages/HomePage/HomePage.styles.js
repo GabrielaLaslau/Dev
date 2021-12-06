@@ -42,5 +42,22 @@ export default StyleSheet.create({
       height: 200,
       backgroundColor: '#2C3539',
       justifyContent: 'center',
+    },
+
+    preview: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+    },
+
+    cameraContainer: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+
+    fixedRatio: {
+      flex: 1,
+      aspectRatio: 1
     }
+
 });

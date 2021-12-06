@@ -39,9 +39,9 @@ export default function SecondPage() {
      
       < TouchableOpacity
         style={styles.startButton}
-        onPress={onPress}
+        onPress={() => navigation.navigate('Cam')}   
       >
-        <Text style={styles.buttonText}>Take the 'shoot'</Text>
+        <Text style={styles.buttonText}>Open camera</Text>
       </TouchableOpacity>
    </ImageBackground>
  );

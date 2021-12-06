@@ -1,7 +1,8 @@
+import React from 'react';
 import { Text , View } from 'react-native';
 import styles from './HomePage.styles';
 
-const Header = () => {
+export default function Header () {
     return (
         <View style={styles.view}>
             <Text style={styles.textBigger}>
@@ -25,5 +26,3 @@ const Header = () => {
         </View>
     )
 }
-
-export default Header;
