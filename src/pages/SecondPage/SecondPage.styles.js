@@ -46,8 +46,8 @@ startButton: {
  backgroundColor: '#2C3539',
  alignItems: 'center',
  justifyContent: 'center',
- margin: 400,
- borderRadius: 20
+ borderRadius: 20,
+ marginBottom: 60
 },
 
 buttonText: {

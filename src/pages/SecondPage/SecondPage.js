@@ -1,48 +1,48 @@
 import React, { useState } from 'react';
-import { View, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import { View, ImageBackground, Text, TouchableOpacity, Image } from 'react-native';
 import styles from './SecondPage.styles';
+import { launchCamera } from 'react-native-image-picker';
 
-export default function SecondPage() {
+export default function SecondPage({navigation}) {
   
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(prevCount => prevCount + 1);
+  const [photo, setPhoto] = useState();
+  
+  console.log("photo",photo)
 
  return (
   <ImageBackground
   style={styles.body}
   source={require('../../../assets/images/dcdf6a004518c7.jpg')}
   > 
-     
      <View style={styles.item}>
-      <Text style={styles.text}>How many photos would you like?</Text>
-      </View>
-      <View style={styles.view_buttons}>
-      < TouchableOpacity
-        style={styles.button}
-        onPress={onPress}
-      >
-      <Text style={styles.buttonText}>1</Text>
-      </TouchableOpacity>
-      < TouchableOpacity
-        style={styles.button}
-        onPress={onPress}
-      >
-        <Text style={styles.buttonText}>2</Text>
-      </TouchableOpacity>
-      < TouchableOpacity
-        style={styles.button}
-        onPress={onPress}
-      >
-        <Text style={styles.buttonText}>3</Text>
-      </TouchableOpacity>
+      <Text style={styles.text}>Be ready to enjoy every moment</Text>
       </View>
      
+      <View style={{width: 300 , height: 300 ,backgroundColor: 'red' }}>
+       {photo && <Image source={{ uri: photo }} style={{ width: 300 , height: 300 }} />}
+      </View>
+
       < TouchableOpacity
         style={styles.startButton}
-        onPress={() => navigation.navigate('Cam')}   
+        onPress={async () => {
+          const res = await launchCamera({ 
+            mediaType: 'photo', 
+            quality: 1, 
+            includeBase64: false,
+            cameraType: 'back', 
+            saveToPhotos: true ,
+            maxHeight: 600, 
+            maxWidth: 1000}, 
+           );
+        
+           console.log(res.assets[0].uri)
+           setPhoto(res.assets[0].uri)
+        }
+        }
       >
         <Text style={styles.buttonText}>Open camera</Text>
       </TouchableOpacity>
+
    </ImageBackground>
  );
 }
