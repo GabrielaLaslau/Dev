@@ -6,8 +6,7 @@ import Header from './Header';
 const HomePage = ( {navigation} ) => {
 
   const [started,setStarted] = useState(false)
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(prevCount => prevCount + 1);
+
  return (
   <ImageBackground
   style={styles.body}
@@ -16,7 +15,7 @@ const HomePage = ( {navigation} ) => {
    <Header/>   
    < TouchableOpacity
         style={styles.buttonItem}
-        onPress={() => navigation.navigate('Menu')}
+        onPress={() => navigation.navigate('toSignIn')}
       >
         <Text style={styles.text}>GET STARTED</Text>
       </TouchableOpacity>

@@ -17,6 +17,16 @@ item: {
  borderRadius: 20
 },
 
+item2: {
+  width: 290,
+  height: 50,
+  backgroundColor: '#FFFFFF',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  margin: 20,
+  borderRadius: 20
+ },
+
 view_buttons: {
 flexDirection: 'row',
 },
@@ -47,7 +57,7 @@ startButton: {
  alignItems: 'center',
  justifyContent: 'center',
  borderRadius: 20,
- marginBottom: 60
+ marginBottom: 10
 },
 
 buttonText: {
