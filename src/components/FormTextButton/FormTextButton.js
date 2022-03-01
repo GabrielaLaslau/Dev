@@ -1,9 +1,10 @@
 import React from 'react'
 import {
     Text,
-    StyleSheet,
     Pressable
 } from 'react-native'
+
+import styles from './FormTextButton.styles';
 
 const CustomButton = ({ onPress, text, type = "PRIMARY", fgColor }) => {
     return (
@@ -19,25 +20,5 @@ const CustomButton = ({ onPress, text, type = "PRIMARY", fgColor }) => {
         </Pressable>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        padding: 15,
-        marginVertical: 5,
-        alignItems: 'center',
-        borderRadius: 15,
-    },
-
-    container_PRIAMRY: {
-        backgroundColor: '#2C3539',
-    },
-
-    container_TERTIARY: {},
-
-    text: {
-        color: '#ffff',
-    }
-});
 
 export default CustomButton;

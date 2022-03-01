@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import {
-    StyleSheet,
     View,
     Text,
 } from 'react-native';
 
-import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput";
+import FormInput from '../../components/FormInput';
+import FormClickButton from '../../components/FormClickButton';
+import { useForm } from 'react-hook-form';
 
+const ConfirmEmailPage = ({ navigation }) => {
 
-const ConfirmEmailPage = ( {navigation} ) => {
-
+    const { control, handleSubmit } = useForm();
     const [code, setCode] = useState('');
 
-    const onConfirmPressed = () => {
-        console.warn("onConfirmPressed");
+    const onConfirmPressed = (data) => {
+        console.warn(data);
+        navigation.navigate("Home");
     }
+
     const onResendPressed = () => {
         console.warn("onResendPressed");
     }
+
     const onSignInPressed = () => {
         console.warn("onSignInPressed");
     }
@@ -29,35 +32,32 @@ const ConfirmEmailPage = ( {navigation} ) => {
                 Confirm your e-mail
             </Text>
 
-            <CustomInput
+            <FormInput
+                name="code"
+                control={control}
                 placeholder="Enter your code"
-                value={code}
-                setValue={setCode}
+                rules={{
+                    required: "The confirmation code is required"
+                }}
             />
 
-            <CustomButton text="Confirm" onPress={onConfirmPressed} />
-             
-            <CustomButton 
-            text="Resend code" 
-            onPress={onResendPressed}
-             />
-             
-             <CustomButton 
-            text="Back to Sign in" 
-            onPress={() => navigation.navigate('toSignIn')}
-             />
+            <FormClickButton
+                text="Confirm"
+                onPress={handleSubmit(onConfirmPressed)}
+            />
+
+            <FormClickButton
+                text="Resend code"
+                onPress={onResendPressed}
+            />
+
+            <FormClickButton
+                text="Back to Sign in"
+                onPress={() => navigation.navigate('toSignIn')}
+            />
 
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#2C3539',
-    },
-});
 
 export default ConfirmEmailPage;

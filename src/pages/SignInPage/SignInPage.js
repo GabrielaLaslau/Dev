@@ -1,72 +1,107 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-    StyleSheet,
     View,
     Text,
     useWindowDimensions,
+    Image,
+    ScrollView,
 } from 'react-native';
 
-import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput";
+import styles from './SignInPage.styles';
+import FormInput from '../../components/FormInput';
+import FormClickButton from '../../components/FormClickButton';
+import FormTextButton from '../../components/FormTextButton';
+import SocialButton from '../../components/SocialButton';
 
-const SignInPage = ( {navigation} ) => {
+import Logo from '../../../assets/images/Logo_1.jpg';
+import { useForm, Controller } from 'react-hook-form';
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const SignInPage = ({ navigation }) => {
 
-    const onSignInPressed = () => {
-        console.warn("onSignInPressed");
+    const { height } = useWindowDimensions();
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const onSignInPressed = data => {
+        console.log(data);
+        navigation.navigate('toMenu');
     }
     const onForgotPasswordPressed = () => {
-        console.warn('onForgotPasswordPressed');
+        navigation.navigate('toForgotPassword')
     }
     const onSignUpPressed = () => {
-        console.warn("onSignUpPressed");
+        navigation.navigate('toSignUp')
     }
-    const { height } = useWindowDimensions();
 
     return (
-        <View style={styles.root}>
-            <Text>
-                Sign In
-            </Text>
+        <ScrollView showsVerticalScrollIndicator={false} >
+            <View style={styles.root}>
+                <Image
+                    source={Logo}
+                    style={styles.logoStyle}
+                    resizeMode="contain" />
 
-            <CustomInput
-                placeholder="E-mail"
-                value={email}
-                setValue={setEmail}
-            />
-            <CustomInput
-                placeholder="Password"
-                value={password}
-                setValue={setPassword}
-                secureTextEntry
-            />
-            <CustomButton 
-            text="Sign in" 
-            onPress={onSignInPressed}
-            />
-            <CustomButton
-                text="Forgot password?"
-                onPress={() => navigation.navigate('toForgotPassword')}
-                type="TERTIATY"
-            />
-            <CustomButton
-                text="Don't have an account? Create one"
-                onPress={() => navigation.navigate('toSignUp')}
-                type="TERTIATY"
-            />
-        </View>
+                <Text style={styles.textStyleIn}>
+                    Welcome back,
+                </Text>
+                <Text style={styles.textStyle}>
+                    sign in to continue
+                </Text>
+
+                <FormInput
+                    name="Username"
+                    placeholder="Username"
+                    control={control}
+                    rules={{ required: 'The username is required!' }} />
+
+                <FormInput
+                    name="Password"
+                    placeholder="Password"
+                    secureTextEntry
+                    control={control}
+                    rules={{
+                        required: 'The password is required!',
+                        minLenght: {
+                            value: 7,
+                            message: 'The password should be al least 7 characters long',
+                        },
+                    }} />
+
+                <FormTextButton
+                    text="Forgot password?"
+                    onPress={onForgotPasswordPressed}
+                    type="TERTIATY" />
+
+                <FormClickButton
+                    text="Sign In"
+                    onPress={handleSubmit(onSignInPressed)} />
+
+                <SocialButton
+                    buttonTitle="Sign Up with Facebook"
+                    btnType="facebook"
+                    color="#4867aa"
+                    backgroundColor="#e6eaf4"
+                    onPress={() => { }}
+                />
+
+                <SocialButton
+                    buttonTitle="Sign Up with Google"
+                    btnType="google"
+                    color="#de4d41"
+                    backgroundColor="#f5e7ea"
+                    onPress={() => { }}
+                />
+
+                <FormTextButton
+                    text="Don't have an account? Create one"
+                    onPress={onSignUpPressed}
+                    type="TERTIATY" />
+
+            </View>
+        </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#2C3539',
-    },
-});
-
 export default SignInPage;

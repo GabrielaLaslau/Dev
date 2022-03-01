@@ -1,32 +1,40 @@
-import React, {useState} from 'react';
-import { Text , ImageBackground , TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import {
+  Text,
+  ImageBackground,
+  TouchableOpacity
+} from 'react-native';
 import styles from './HomePage.styles';
 import Header from './Header';
 
-const HomePage = ( {navigation} ) => {
+const HomePage = ({ navigation }) => {
 
-  const [started,setStarted] = useState(false)
+  const [started, setStarted] = useState(false)
 
- return (
-  <ImageBackground
-  style={styles.body}
-  source={require('../../../assets/images/f0a8cede86dd82cf7.jpg')}
-  >
-   <Header/>   
-   < TouchableOpacity
+  const onSignInPressed = () => {
+    navigation.navigate('toSignIn');
+  }
+
+  return (
+    <ImageBackground
+      style={styles.body}
+      source={require('../../../assets/images/f0a8cede86dd82cf7.jpg')}
+    >
+      <Header />
+      < TouchableOpacity
         style={styles.buttonItem}
-        onPress={() => navigation.navigate('toSignIn')}
+        onPress={onSignInPressed}
       >
         <Text style={styles.text}>GET STARTED</Text>
       </TouchableOpacity>
 
-      { started ?
+      {started ?
         <Text style={styles.text}>
         </Text>
         :
         null
       }
-   </ImageBackground>
- );
+    </ImageBackground>
+  );
 }
 export default HomePage;

@@ -1,75 +1,112 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-    StyleSheet,
+   
     View,
     Text,
+    Image,
 } from 'react-native';
 
-import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput";
+import styles from './SignUpPage.styles';
+import FormInput from '../../components/FormInput';
+import FormClickButton from '../../components/FormClickButton';
+import FormTextButton from '../../components/FormTextButton';
+import Logo from '../../../assets/images/Logo_1.jpg';
+import { ScrollView } from "react-native-gesture-handler";
+import { useForm } from 'react-hook-form';
 
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
-const SignUpPage = ( {navigation} ) => {
+const SignUpPage = ({ navigation }) => {
 
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const { control, handleSubmit, watch } = useForm();
+    const pwd = watch('Password');
 
     const onRegisterPressed = () => {
-        console.warn("onRegisterPressed");
+        console.log(data);
+        navigation.navigate("toMenu");
     }
+
     const onSignInPressed = () => {
-        console.warn("onSignInPressed");
+        navigation.navigate('toSignIn');
     }
 
     return (
-        <View style={styles.root}>
-            <Text>
-                Sign Up/ Create an account
-            </Text>
+        <ScrollView showsVerticalScrollIndicator={false} >
+            <View style={styles.root}>
+                <Image source={Logo} style={styles.logoStyle} />
+                <Text style={styles.textStyleIn}>
+                    Welcome,
+                </Text>
+                <Text style={styles.textStyle}>
+                    sign up to continue
+                </Text>
 
-            <CustomInput
-                placeholder="E-mail"
-                value={email}
-                setValue={setEmail}
-            />
-            <CustomInput
-                placeholder="Username"
-                value={username}
-                setValue={setUsername}
-            />
-            <CustomInput
-                placeholder="Password"
-                value={password}
-                setValue={setPassword}
-                secureTextEntry
-            />
-            <CustomInput
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                setValue={setConfirmPassword}
-                secureTextEntry
-            />
+                <FormInput
+                    name="E-mail"
+                    control={control}
+                    placeholder="E-mail"
+                    rules={{
+                        required: 'The e-mail is required!',
+                        pattern: {
+                            value: EMAIL_REGEX, message: 'The e-mail is invalid!'
+                        }
+                    }}
+                />
 
-            <CustomButton text="Register" onPress={onRegisterPressed} />
+                <FormInput
+                    name="Username"
+                    control={control}
+                    placeholder="Username"
+                    rules={{
+                        required: 'The username is required!',
+                        minLenght: {
+                            value: 7,
+                            message: 'The username should be al least 7 characters long.',
+                        },
+                        maxLenght: {
+                            value: 15,
+                            message: 'The username should be al maximum 15 characters long.',
+                        },
+                    }}
+                />
 
-            <CustomButton 
-            text="Have an account? Sign in" 
-            onPress={() => navigation.navigate('toSignIn')}
-             />
-             
-        </View>
+                <FormInput
+                    name="Password"
+                    control={control}
+                    placeholder="Password"
+                    secureTextEntry
+                    rules={{
+                        required: 'The password is required!',
+                        minLenght: {
+                            value: 8,
+                            message: 'The password should be al least 8 characters long.',
+                        },
+                    }}
+                />
+
+                <FormInput
+                    name="Confirm-password"
+                    control={control}
+                    placeholder="Confirm Password"
+                    secureTextEntry
+                    rules={{
+                        required: 'The confirm password is required!',
+                        validate: value => value == pwd || 'Password do not match!',
+                    }}
+                />
+
+                <FormClickButton
+                    text="Register"
+                    onPress={handleSubmit(onRegisterPressed)}
+                />
+
+                <FormTextButton
+                    text="Have an account? Sign In"
+                    onPress={onSignInPressed}
+                />
+            </View>
+        </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#2C3539',
-    },
-});
 
 export default SignUpPage;

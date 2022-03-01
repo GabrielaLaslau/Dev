@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import {
-    StyleSheet,
     View,
     Text,
 } from 'react-native';
 
-import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput";
+import styles from './NewPasswordPage.styles';
 
-const NewPasswordPage = ( {navigation} ) => {
+import FormInput from '../../components/FormInput';
+import FormClickButton from '../../components/FormClickButton';
+
+const NewPasswordPage = ({ navigation }) => {
 
     const [code, setCode] = useState('');
     const [password, setPassword] = useState('');
@@ -18,49 +19,41 @@ const NewPasswordPage = ( {navigation} ) => {
         console.warn("onSubmitPressed");
     }
     const onSignInPressed = () => {
-        console.warn("onSignInPressed");
+        navigation.navigate('toSignIn');
     }
+    
     return (
         <View style={styles.root}>
-            <Text>
+            <Text style={styles.textStyle}>
                 Reset your password
             </Text>
-
-            <CustomInput
+            <FormInput
                 placeholder="Code*"
                 value={code}
                 setValue={setCode}
             />
-            <CustomInput
+            <FormInput
                 placeholder="Password"
                 value={password}
                 setValue={setPassword}
                 secureTextEntry
             />
-            <CustomInput
+            <FormInput
                 placeholder="Confirm password"
                 value={confirmPassword}
                 setValue={setConfirmPassword}
                 secureTextEntry
             />
-
-            <CustomButton text="SUBMIT" onPress={onSubmitPressed} />
-            <CustomButton 
-            text="Back to Sign In" 
-             onPress={() => navigation.navigate('toSignIn')} 
+            <FormClickButton
+                text="SUBMIT"
+                onPress={onSubmitPressed}
             />
-
+            <FormClickButton
+                text="Back to Sign In"
+                onPress={onSignInPressed}
+            />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#2C3539',
-    },
-});
 
 export default NewPasswordPage;
