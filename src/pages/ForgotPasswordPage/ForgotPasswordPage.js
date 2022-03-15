@@ -5,9 +5,11 @@ import {
 } from 'react-native';
 
 import styles from './ForgotPasswordPage.styles';
+
 import FormInput from '../../components/FormInput';
 import FormClickButton from '../../components/FormClickButton';
 import FormTextButton from '../../components/FormTextButton';
+
 import { useForm } from 'react-hook-form';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
@@ -16,13 +18,15 @@ const ForgotPasswordPage = ({ navigation }) => {
 
     const { control, handleSubmit } = useForm();
 
-    const onSendPressed = () => {
+    const onSendPress = () => {
         navigation.navigate('toNewPassword');
     }
-    const onResendPressed = () => {
+
+    const onResendPress = () => {
         console.warn("onResendPressed");
     }
-    const onSignInPressed = () => {
+
+    const onSignInPress = () => {
         navigation.navigate('toSignIn');
     }
 
@@ -35,7 +39,7 @@ const ForgotPasswordPage = ({ navigation }) => {
             <FormInput
                 name="E-mail"
                 placeholder="E-mail"
-                control={control} 
+                control={control}
                 rules={{
                     pattern: {
                         value: EMAIL_REGEX, message: 'The e-mail is invalid.'
@@ -45,16 +49,17 @@ const ForgotPasswordPage = ({ navigation }) => {
 
             <FormTextButton
                 text="Resend an e-mail"
-                onPress={onResendPressed}
+                onPress={handleSubmit(onResendPress)}
             />
 
             <FormClickButton
                 text="SEND"
-                onPress={handleSubmit(onSendPressed)}
+                onPress={handleSubmit(onSendPress)}
             />
+
             <FormClickButton
                 text="Back to Sign In"
-                onPress={onSignInPressed}
+                onPress={handleSubmit(onSignInPress)}
             />
 
         </View>

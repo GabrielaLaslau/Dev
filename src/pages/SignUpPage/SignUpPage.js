@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-   
     View,
     Text,
     Image,
 } from 'react-native';
 
 import styles from './SignUpPage.styles';
+
 import FormInput from '../../components/FormInput';
 import FormClickButton from '../../components/FormClickButton';
 import FormTextButton from '../../components/FormTextButton';
 import Logo from '../../../assets/images/Logo_1.jpg';
+
+import { useDispatch } from 'react-redux';
+import {userRegister} from '../../Redux/Actions';
+
 import { ScrollView } from "react-native-gesture-handler";
 import { useForm } from 'react-hook-form';
 
@@ -18,22 +22,31 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9
 
 const SignUpPage = ({ navigation }) => {
 
+    const dispatch = useDispatch();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const { control, handleSubmit, watch } = useForm();
     const pwd = watch('Password');
 
-    const onRegisterPressed = () => {
-        console.log(data);
-        navigation.navigate("toMenu");
+    const onRegisterPress = () => {
+        //console.log(data);
+        // navigation.navigate("toConfirmEmail");
+        dispatch(userRegister(username,email,password));
     }
 
-    const onSignInPressed = () => {
+    const onSignInPress = () => {
         navigation.navigate('toSignIn');
     }
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
             <View style={styles.root}>
-                <Image source={Logo} style={styles.logoStyle} />
+                <Image
+                    source={Logo}
+                    style={styles.logoStyle}
+                />
+
                 <Text style={styles.textStyleIn}>
                     Welcome,
                 </Text>
@@ -43,8 +56,10 @@ const SignUpPage = ({ navigation }) => {
 
                 <FormInput
                     name="E-mail"
-                    control={control}
                     placeholder="E-mail"
+                    control={control}
+                    value={email}
+                    setValue={setEmail}
                     rules={{
                         required: 'The e-mail is required!',
                         pattern: {
@@ -57,6 +72,8 @@ const SignUpPage = ({ navigation }) => {
                     name="Username"
                     control={control}
                     placeholder="Username"
+                    value={username}
+                    setValue={setUsername}
                     rules={{
                         required: 'The username is required!',
                         minLenght: {
@@ -74,6 +91,8 @@ const SignUpPage = ({ navigation }) => {
                     name="Password"
                     control={control}
                     placeholder="Password"
+                    value={password}
+                    setValue={setPassword}
                     secureTextEntry
                     rules={{
                         required: 'The password is required!',
@@ -97,13 +116,14 @@ const SignUpPage = ({ navigation }) => {
 
                 <FormClickButton
                     text="Register"
-                    onPress={handleSubmit(onRegisterPressed)}
+                    onPress={handleSubmit(onRegisterPress)}
                 />
 
                 <FormTextButton
                     text="Have an account? Sign In"
-                    onPress={onSignInPressed}
+                    onPress={onSignInPress}
                 />
+
             </View>
         </ScrollView>
     )

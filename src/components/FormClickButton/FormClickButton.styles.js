@@ -5,10 +5,11 @@ export default StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         backgroundColor: '#0000cd',
+        height: 45,
         borderRadius: 25,
         width: '100%',
-        padding: 15,  
-        marginVertical: 15,   
+        padding: 10,  
+        marginVertical: 5,   
         marginTop: 75,    
     },
 
@@ -18,5 +19,7 @@ export default StyleSheet.create({
 
     text: {
         color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
     }
 });

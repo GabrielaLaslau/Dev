@@ -8,13 +8,15 @@ import {
 } from 'react-native';
 
 import styles from './SignInPage.styles';
+
 import FormInput from '../../components/FormInput';
 import FormClickButton from '../../components/FormClickButton';
 import FormTextButton from '../../components/FormTextButton';
 import SocialButton from '../../components/SocialButton';
 
 import Logo from '../../../assets/images/Logo_1.jpg';
-import { useForm, Controller } from 'react-hook-form';
+
+import { useForm } from 'react-hook-form';
 
 const SignInPage = ({ navigation }) => {
 
@@ -25,14 +27,16 @@ const SignInPage = ({ navigation }) => {
         formState: { errors },
     } = useForm();
 
-    const onSignInPressed = data => {
+    const onSignInPress = data => {
         console.log(data);
         navigation.navigate('toMenu');
     }
-    const onForgotPasswordPressed = () => {
+
+    const onForgotPasswordPress = () => {
         navigation.navigate('toForgotPassword')
     }
-    const onSignUpPressed = () => {
+
+    const onSignUpPress = () => {
         navigation.navigate('toSignUp')
     }
 
@@ -42,7 +46,8 @@ const SignInPage = ({ navigation }) => {
                 <Image
                     source={Logo}
                     style={styles.logoStyle}
-                    resizeMode="contain" />
+                    resizeMode="contain"
+                />
 
                 <Text style={styles.textStyleIn}>
                     Welcome back,
@@ -55,7 +60,8 @@ const SignInPage = ({ navigation }) => {
                     name="Username"
                     placeholder="Username"
                     control={control}
-                    rules={{ required: 'The username is required!' }} />
+                    rules={{ required: 'The username is required!' }}
+                />
 
                 <FormInput
                     name="Password"
@@ -68,16 +74,19 @@ const SignInPage = ({ navigation }) => {
                             value: 7,
                             message: 'The password should be al least 7 characters long',
                         },
-                    }} />
+                    }}
+                />
 
                 <FormTextButton
                     text="Forgot password?"
-                    onPress={onForgotPasswordPressed}
-                    type="TERTIATY" />
+                    onPress={onForgotPasswordPress}
+                    type="TERTIATY"
+                />
 
                 <FormClickButton
                     text="Sign In"
-                    onPress={handleSubmit(onSignInPressed)} />
+                    onPress={handleSubmit(onSignInPress)}
+                />
 
                 <SocialButton
                     buttonTitle="Sign Up with Facebook"
@@ -97,11 +106,13 @@ const SignInPage = ({ navigation }) => {
 
                 <FormTextButton
                     text="Don't have an account? Create one"
-                    onPress={onSignUpPressed}
-                    type="TERTIATY" />
+                    onPress={onSignUpPress}
+                    type="TERTIATY"
+                />
 
             </View>
         </ScrollView>
     )
 }
+
 export default SignInPage;

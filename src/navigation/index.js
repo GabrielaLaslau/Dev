@@ -28,7 +28,7 @@ const Navigation = () => {
                     <Stack.Screen name="toSignUp" component={SignUpPage}/>
                     <Stack.Screen name="toForgotPassword" component={ForgotPasswordPage}/>
                     <Stack.Screen name="toNewPassword" component={NewPasswordPage}/>
-                    <Stack.Screen name="ConfirmEmail" component={ConfirmEmailPage}/>
+                    <Stack.Screen name="toConfirmEmail" component={ConfirmEmailPage}/>
                     <Stack.Screen name="toMenu"component={SecondPage}/>
 
                 </Stack.Navigator>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     View,
     Text,
@@ -11,47 +11,67 @@ import FormClickButton from '../../components/FormClickButton';
 
 const NewPasswordPage = ({ navigation }) => {
 
-    const [code, setCode] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const { control, handleSubmit, watch } = useForm();
+    const pwd = watch('Password');
 
-    const onSubmitPressed = () => {
+    const onSubmitPress = () => {
         console.warn("onSubmitPressed");
     }
-    const onSignInPressed = () => {
+
+    const onSignInPress = () => {
         navigation.navigate('toSignIn');
     }
-    
+
     return (
         <View style={styles.root}>
             <Text style={styles.textStyle}>
                 Reset your password
             </Text>
+
             <FormInput
-                placeholder="Code*"
-                value={code}
-                setValue={setCode}
+                name="Code"
+                placeholder="Code"
+                control={control}
+                rules={{
+                    required: 'The code is required!',
+                }}
             />
+
             <FormInput
+                name="Password"
+                control={control}
                 placeholder="Password"
-                value={password}
-                setValue={setPassword}
                 secureTextEntry
+                rules={{
+                    required: 'The password is required!',
+                    minLenght: {
+                        value: 8,
+                        message: 'The password should be al least 8 characters long.',
+                    },
+                }}
             />
+
             <FormInput
-                placeholder="Confirm password"
-                value={confirmPassword}
-                setValue={setConfirmPassword}
+                name="Confirm-password"
+                control={control}
+                placeholder="Confirm Password"
                 secureTextEntry
+                rules={{
+                    required: 'The confirm password is required!',
+                    validate: value => value == pwd || 'Password do not match!',
+                }}
             />
+
             <FormClickButton
                 text="SUBMIT"
-                onPress={onSubmitPressed}
+                onPress={handleSubmit(onSubmitPress)}
             />
+
             <FormClickButton
                 text="Back to Sign In"
-                onPress={onSignInPressed}
+                onPress={handleSubmit(onSignInPress)}
             />
+
         </View>
     )
 }
