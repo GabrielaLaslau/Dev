@@ -13,7 +13,8 @@ const FormInput = ({
     name,
     rules = {},
     placeholder,
-    secureTextEntry }) => {
+    secureTextEntry,
+    setValue }) => {
 
     return (
         <Controller
@@ -29,7 +30,7 @@ const FormInput = ({
                         ]}>
                         <TextInput
                             value={value}
-                            onChangeText={onChange}
+                            onChangeText={setValue}
                             onBlur={onBlur}
                             placeholder={placeholder}
                             style={styles.input}

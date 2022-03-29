@@ -1,9 +1,15 @@
 export const GET_USER = 'GET_USER';
 export const ADD_USER = 'ADD_USER';
+
+export const SET_USER_NAME = 'SET_USER_NAME';
+
 export const POST_REGISTER = 'POST_REGISTER';
 
 const API_URL = 'https://cool-project-backend.herokuapp.com/api/postares';
-const API_URL_register = ' https://cool-project-backend.herokuapp.com/api/auth/local/register';
+const API_URL_register = 'https://cool-project-backend.herokuapp.com/api/auth/local/register';
+
+// TODO:
+// salvam jwt in asign storage
 
 export const getUser = () => {
     try {
@@ -19,10 +25,7 @@ export const getUser = () => {
             if (json) {
                 dispatch({
                     type: GET_USER,
-                    payload: json.data.map(item => ({
-                        id: item.id,
-                        ...item.attributes,
-                    })),
+                    payload: json
                 });
             }
             else {
@@ -43,10 +46,18 @@ export const addUser = item => dispatch => {
     });
 };
 
-export const userRegister = (email,username,password) => {
+export const setUsername = username => dispatch => {
+    dispatch({
+        type: SET_USER_NAME,
+        payload: username,
+    });
+};
+
+
+export const userRegister = (email, username, password) => {
     try {
         return async dispatch => {
-            console.log('I am in!');
+            console.log('I am in!', email, username, password);
             const result = await fetch(API_URL_register, {
                 method: 'POST',
                 headers: {
@@ -54,15 +65,16 @@ export const userRegister = (email,username,password) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    username:username,
-                    email,
-                    password,
+                    // camp:variabila; daca se scriu la fel,se lasa o sg data
+                    username: username,
+                    email: email.trim(),
+                    password: password,
                 }),
-            }) .catch(error => console.log('nu asa',error))
-            console.log(result);
+            }).catch(error => console.log('nu asa', error))
             const json = await result.json();
 
-            console.log('fetch = ', json);
+            // jwt - un camp ce exista in json - trebuie salvat in memoria telefonului pt autentificare
+           
             if (json.jwt) {
                 dispatch({
                     type: POST_REGISTER,

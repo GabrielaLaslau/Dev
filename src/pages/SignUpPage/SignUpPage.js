@@ -3,6 +3,7 @@ import {
     View,
     Text,
     Image,
+    TextInput,
 } from 'react-native';
 
 import styles from './SignUpPage.styles';
@@ -12,32 +13,52 @@ import FormClickButton from '../../components/FormClickButton';
 import FormTextButton from '../../components/FormTextButton';
 import Logo from '../../../assets/images/Logo_1.jpg';
 
-import { useDispatch } from 'react-redux';
-import {userRegister} from '../../Redux/Actions';
+import { useDispatch,useSelector } from 'react-redux';
+import { userRegister,setUserame } from '../../Redux/Actions';
 
 import { ScrollView } from "react-native-gesture-handler";
 import { useForm } from 'react-hook-form';
 
+// TODO:
+// useEffect pt State - selector
+// daca selector-ul != null atunci navigam spre alta pag
+
+
+// TODO:
+// Acelasi lucru pt Sign in - cu exceptia ca vom avea /api/auth/local , nu register
+// nu mai trimitem email si username ci un IDENTIFIER(username/email) si parola
+
+let json;
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
 const SignUpPage = ({ navigation }) => {
 
+    const state = useSelector(state => state.reducer);
     const dispatch = useDispatch();
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const { control, handleSubmit, watch } = useForm();
     const pwd = watch('Password');
 
-    const onRegisterPress = () => {
-        //console.log(data);
+    console.log('date',state);
+
+    const onRegisterPress = (data) => {
+        console.log("register - ", data);
         // navigation.navigate("toConfirmEmail");
-        dispatch(userRegister(username,email,password));
+        //dispatch(userRegister(username, email, password));
     }
 
     const onSignInPress = () => {
         navigation.navigate('toSignIn');
     }
+
+    const onPressHandler2 = async () => {
+        console.log('JSON:',email,'-',username,'-'+password);
+        dispatch(userRegister(email,username, password)); //cheama ce e in action
+      //  dispatch(setUsername(username));
+    };
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
@@ -54,69 +75,45 @@ const SignUpPage = ({ navigation }) => {
                     sign up to continue
                 </Text>
 
-                <FormInput
+                <TextInput
                     name="E-mail"
                     placeholder="E-mail"
-                    control={control}
+                   // control={control}
                     value={email}
-                    setValue={setEmail}
-                    rules={{
-                        required: 'The e-mail is required!',
-                        pattern: {
-                            value: EMAIL_REGEX, message: 'The e-mail is invalid!'
-                        }
-                    }}
+                    onChangeText={setEmail} // onChange pt TextInput , setValue pt FormInput
+                   
                 />
 
-                <FormInput
+                <TextInput
                     name="Username"
                     control={control}
                     placeholder="Username"
                     value={username}
-                    setValue={setUsername}
-                    rules={{
-                        required: 'The username is required!',
-                        minLenght: {
-                            value: 7,
-                            message: 'The username should be al least 7 characters long.',
-                        },
-                        maxLenght: {
-                            value: 15,
-                            message: 'The username should be al maximum 15 characters long.',
-                        },
-                    }}
+                    onChangeText={setUsername}
+                   
                 />
 
-                <FormInput
+                <TextInput
                     name="Password"
                     control={control}
                     placeholder="Password"
                     value={password}
-                    setValue={setPassword}
+                    onChangeText={setPassword}
                     secureTextEntry
-                    rules={{
-                        required: 'The password is required!',
-                        minLenght: {
-                            value: 8,
-                            message: 'The password should be al least 8 characters long.',
-                        },
-                    }}
+                   
                 />
 
-                <FormInput
+                <TextInput
                     name="Confirm-password"
                     control={control}
                     placeholder="Confirm Password"
                     secureTextEntry
-                    rules={{
-                        required: 'The confirm password is required!',
-                        validate: value => value == pwd || 'Password do not match!',
-                    }}
+                   
                 />
 
                 <FormClickButton
                     text="Register"
-                    onPress={handleSubmit(onRegisterPress)}
+                    onPress={onPressHandler2}
                 />
 
                 <FormTextButton
