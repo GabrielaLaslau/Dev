@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -8,27 +8,16 @@ import {
 
 import styles from './SignUpPage.styles';
 
-import FormInput from '../../components/FormInput';
 import FormClickButton from '../../components/FormClickButton';
 import FormTextButton from '../../components/FormTextButton';
 import Logo from '../../../assets/images/Logo_1.jpg';
 
-import { useDispatch,useSelector } from 'react-redux';
-import { userRegister,setUserame } from '../../Redux/Actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { userRegister, getUser } from '../../Redux/Actions';
 
 import { ScrollView } from "react-native-gesture-handler";
 import { useForm } from 'react-hook-form';
 
-// TODO:
-// useEffect pt State - selector
-// daca selector-ul != null atunci navigam spre alta pag
-
-
-// TODO:
-// Acelasi lucru pt Sign in - cu exceptia ca vom avea /api/auth/local , nu register
-// nu mai trimitem email si username ci un IDENTIFIER(username/email) si parola
-
-let json;
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
 const SignUpPage = ({ navigation }) => {
@@ -36,28 +25,31 @@ const SignUpPage = ({ navigation }) => {
     const state = useSelector(state => state.reducer);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+         // daca state ul va avea un camp user -> logare spre HomePage
+         // folosim state-ul,nu dispatch-ul
+        // la fel si in SignIn
+       //   dispatch(getUser());
+       // actiuni asincrone
+       // metoda await-ul blocheaza aplicatia
+
+    }, [state]);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const { control, handleSubmit, watch } = useForm();
-    const pwd = watch('Password');
+    const [confirmpassword, setConfirmPassword] = useState('');
+    const { watch } = useForm();
 
-    console.log('date',state);
-
-    const onRegisterPress = (data) => {
-        console.log("register - ", data);
-        // navigation.navigate("toConfirmEmail");
-        //dispatch(userRegister(username, email, password));
-    }
+    console.log('date', state);
 
     const onSignInPress = () => {
         navigation.navigate('toSignIn');
     }
 
-    const onPressHandler2 = async () => {
-        console.log('JSON:',email,'-',username,'-'+password);
-        dispatch(userRegister(email,username, password)); //cheama ce e in action
-      //  dispatch(setUsername(username));
+    const onPressHandler = async () => {
+        console.log('JSON:', email, '-', username, '-' + password);
+        dispatch(userRegister(email, username, password));
     };
 
     return (
@@ -76,44 +68,42 @@ const SignUpPage = ({ navigation }) => {
                 </Text>
 
                 <TextInput
+                    style={styles.customInput}
                     name="E-mail"
                     placeholder="E-mail"
-                   // control={control}
                     value={email}
-                    onChangeText={setEmail} // onChange pt TextInput , setValue pt FormInput
-                   
+                    onChangeText={setEmail}
                 />
 
                 <TextInput
+                    style={styles.customInput}
                     name="Username"
-                    control={control}
                     placeholder="Username"
                     value={username}
                     onChangeText={setUsername}
-                   
                 />
 
                 <TextInput
+                    style={styles.customInput}
                     name="Password"
-                    control={control}
                     placeholder="Password"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
-                   
                 />
 
                 <TextInput
+                    style={styles.customInput}
                     name="Confirm-password"
-                    control={control}
                     placeholder="Confirm Password"
+                    value={confirmpassword}
+                    onChangeText={setConfirmPassword}
                     secureTextEntry
-                   
                 />
 
                 <FormClickButton
                     text="Register"
-                    onPress={onPressHandler2}
+                    onPress={onPressHandler}
                 />
 
                 <FormTextButton

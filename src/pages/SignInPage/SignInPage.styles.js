@@ -27,4 +27,16 @@ export default StyleSheet.create({
         alignSelf: 'center',
         margin: 10,
     },
+    customInput: {
+        marginTop: 10,
+        width: '100%',
+        height: 45,
+        padding: 5,
+        borderWidth: 1,
+        borderColor: '#000000',
+        borderRadius: 25,
+        paddingHorizontal: 10,
+        marginVertical: 5,
+        marginTop: 20,
+    },
 });

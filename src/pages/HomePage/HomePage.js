@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   ImageBackground,
   TouchableOpacity
 } from 'react-native';
+
 import styles from './HomePage.styles';
 import Header from './Header';
 
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../Redux/Actions';
+
 const HomePage = ({ navigation }) => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   const [started, setStarted] = useState(false)
 
   const onSignInPressed = () => {
-    navigation.navigate('toSignIn');
+    console.log("sunt aici");
+    navigation.navigate('toEverywhere');
   }
 
   return (

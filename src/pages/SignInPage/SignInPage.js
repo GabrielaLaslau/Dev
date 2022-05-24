@@ -1,36 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
-    useWindowDimensions,
     Image,
     ScrollView,
+    TextInput,
 } from 'react-native';
 
 import styles from './SignInPage.styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser, userConnection } from '../../Redux/Actions';
 
-import FormInput from '../../components/FormInput';
-import FormClickButton from '../../components/FormClickButton';
 import FormTextButton from '../../components/FormTextButton';
 import SocialButton from '../../components/SocialButton';
 
 import Logo from '../../../assets/images/Logo_1.jpg';
 
 import { useForm } from 'react-hook-form';
+import FormClickButton from "../../components/FormClickButton";
+
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
 const SignInPage = ({ navigation }) => {
 
-    const { height } = useWindowDimensions();
+    const state = useSelector(state => state.reducer);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // chemam actiune de log ce nu exista inca
+        dispatch(getUser());
+    }, [dispatch]);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const {
-        control,
-        handleSubmit,
         formState: { errors },
     } = useForm();
-
-    const onSignInPress = data => {
-        console.log(data);
-        navigation.navigate('toMenu');
-    }
 
     const onForgotPasswordPress = () => {
         navigation.navigate('toForgotPassword')
@@ -39,6 +45,12 @@ const SignInPage = ({ navigation }) => {
     const onSignUpPress = () => {
         navigation.navigate('toSignUp')
     }
+
+    const onPressHandler = async () => {
+        console.log('JSON:', '-', email, '-' + password);
+        dispatch(userConnection(email, password));
+        navigation.navigate('toMenu');
+    };
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
@@ -56,25 +68,21 @@ const SignInPage = ({ navigation }) => {
                     sign in to continue
                 </Text>
 
-                <FormInput
-                    name="Username"
-                    placeholder="Username"
-                    control={control}
-                    rules={{ required: 'The username is required!' }}
+                <TextInput
+                    style={styles.customInput}
+                    name="E-mail"
+                    placeholder="E-mail"
+                    value={email}
+                    onChangeText={setEmail}
                 />
 
-                <FormInput
+                <TextInput
+                    style={styles.customInput}
                     name="Password"
                     placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
                     secureTextEntry
-                    control={control}
-                    rules={{
-                        required: 'The password is required!',
-                        minLenght: {
-                            value: 7,
-                            message: 'The password should be al least 7 characters long',
-                        },
-                    }}
                 />
 
                 <FormTextButton
@@ -85,12 +93,12 @@ const SignInPage = ({ navigation }) => {
 
                 <FormClickButton
                     text="Sign In"
-                    onPress={handleSubmit(onSignInPress)}
+                    onPress={onPressHandler}
                 />
 
                 <SocialButton
                     buttonTitle="Sign Up with Facebook"
-                    btnType="facebook"
+                    //  btnType="facebook"
                     color="#4867aa"
                     backgroundColor="#e6eaf4"
                     onPress={() => { }}
@@ -98,7 +106,7 @@ const SignInPage = ({ navigation }) => {
 
                 <SocialButton
                     buttonTitle="Sign Up with Google"
-                    btnType="google"
+                    //   btnType="google"
                     color="#de4d41"
                     backgroundColor="#f5e7ea"
                     onPress={() => { }}
@@ -109,7 +117,6 @@ const SignInPage = ({ navigation }) => {
                     onPress={onSignUpPress}
                     type="TERTIATY"
                 />
-
             </View>
         </ScrollView>
     )

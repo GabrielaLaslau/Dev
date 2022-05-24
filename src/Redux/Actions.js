@@ -7,6 +7,7 @@ export const POST_REGISTER = 'POST_REGISTER';
 
 const API_URL = 'https://cool-project-backend.herokuapp.com/api/postares';
 const API_URL_register = 'https://cool-project-backend.herokuapp.com/api/auth/local/register';
+const API_URL_connection = 'https://cool-project-backend.herokuapp.com/api/auth/local';
 
 // TODO:
 // salvam jwt in asign storage
@@ -20,7 +21,6 @@ export const getUser = () => {
                     'Content-Type': 'application/json',
                 },
             });
-
             const json = await result.json();
             if (json) {
                 dispatch({
@@ -32,8 +32,6 @@ export const getUser = () => {
                 console.log('Unable to fetch!');
             }
         };
-
-        // eslint-disable-next-line no-unreachable
     } catch (error) {
         console.log(error);
     }
@@ -74,7 +72,6 @@ export const userRegister = (email, username, password) => {
             const json = await result.json();
 
             // jwt - un camp ce exista in json - trebuie salvat in memoria telefonului pt autentificare
-           
             if (json.jwt) {
                 dispatch({
                     type: POST_REGISTER,
@@ -85,7 +82,36 @@ export const userRegister = (email, username, password) => {
                 console.log('Unable to fetch data.');
             }
         };
-        // eslint-disable-next-line no-unreachable
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const userConnection = (email, password) => {
+    try {
+        return async dispatch => {
+            console.log('User in ->', email, password);
+            const result = await fetch(API_URL_connection, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                }),
+            }).catch(error => console.log('Eroare la conectare', error))
+            const json = await result.json();
+            if (json.jwt) {
+                dispatch({
+                    type: POST_REGISTER,
+                    payload: json.user,
+                });
+            }
+            else {
+                console.log('Unable to connect.');
+            }
+        };
     } catch (error) {
         console.log(error);
     }

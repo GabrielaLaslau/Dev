@@ -21,7 +21,7 @@ function Reducer(state = initialState, action) {
       return { ...state, username: action.payload };
     case POST_REGISTER:
       console.log('action payload = ', action.payload);
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload }; // ... return state ul precedent + actualul 
     default:
       return state;
   }
