@@ -5,14 +5,12 @@ import {
 } from 'react-native';
 
 import styles from './ConfirmEmailPage.styles';
-
 import FormInput from '../../components/FormInput';
 import FormClickButton from '../../components/FormClickButton';
 
 import { useForm } from 'react-hook-form';
 
 const ConfirmEmailPage = ({ navigation }) => {
-
     const { control, handleSubmit } = useForm();
 
     const onConfirmPress = (data) => {

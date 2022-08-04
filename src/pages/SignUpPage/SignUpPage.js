@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+
 import {
     View,
     Text,
@@ -13,7 +14,7 @@ import FormTextButton from '../../components/FormTextButton';
 import Logo from '../../../assets/images/Logo_1.jpg';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { userRegister, getUser } from '../../Redux/Actions';
+import { userRegister } from '../../Redux/Actions';
 
 import { ScrollView } from "react-native-gesture-handler";
 import { useForm } from 'react-hook-form';
@@ -26,12 +27,8 @@ const SignUpPage = ({ navigation }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-         // daca state ul va avea un camp user -> logare spre HomePage
-         // folosim state-ul,nu dispatch-ul
-        // la fel si in SignIn
-       //   dispatch(getUser());
-       // actiuni asincrone
-       // metoda await-ul blocheaza aplicatia
+
+        /* ... */
 
     }, [state]);
 
@@ -39,8 +36,6 @@ const SignUpPage = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [confirmpassword, setConfirmPassword] = useState('');
-    const { watch } = useForm();
-
     console.log('date', state);
 
     const onSignInPress = () => {

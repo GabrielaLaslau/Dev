@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import { View, ImageBackground, Text, TouchableOpacity, Image } from 'react-native';
+
+import {
+  View,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  Image
+} from 'react-native';
+
 import styles from './SecondPage.styles';
 import { launchCamera } from 'react-native-image-picker';
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { setPic } from '../../Redux/Actions';
-
 
 export default function SecondPage({ navigation }) {
 
   const { pic } = useSelector(state => state.reducer)
-
   const [photo, setPhoto] = useState();
   console.log("pic", pic)
 

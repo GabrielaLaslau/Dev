@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import {
   Text,
   ImageBackground,
@@ -12,7 +13,6 @@ import { useDispatch } from 'react-redux';
 import { getUser } from '../../Redux/Actions';
 
 const HomePage = ({ navigation }) => {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,4 +48,5 @@ const HomePage = ({ navigation }) => {
     </ImageBackground>
   );
 }
+
 export default HomePage;

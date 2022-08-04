@@ -1,14 +1,14 @@
 import React from 'react';
+
 import {
   Text,
-  View,
+  View
 } from 'react-native';
 
-
-export default function Feed(){
- return(
-   <View>
-    <Text>Feed Screen</Text>
-  </View>
- )
+export default function Feed(props) {
+  return (
+    <View>
+      <Text>Feed Screen</Text>
+    </View>
+  )
 }

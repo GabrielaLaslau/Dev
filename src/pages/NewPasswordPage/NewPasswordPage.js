@@ -1,16 +1,15 @@
-import React from "react";
+import React from 'react';
+
 import {
     View,
     Text,
 } from 'react-native';
 
 import styles from './NewPasswordPage.styles';
-
 import FormInput from '../../components/FormInput';
 import FormClickButton from '../../components/FormClickButton';
 
 const NewPasswordPage = ({ navigation }) => {
-
     const { control, handleSubmit, watch } = useForm();
     const pwd = watch('Password');
 
@@ -71,7 +70,6 @@ const NewPasswordPage = ({ navigation }) => {
                 text="Back to Sign In"
                 onPress={handleSubmit(onSignInPress)}
             />
-
         </View>
     )
 }

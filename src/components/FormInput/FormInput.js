@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+
 import {
     Text,
     View,
     TextInput,
-} from 'react-native'
+} from 'react-native';
 
 import styles from './FormInput.styles';
 import { Controller } from 'react-hook-form';

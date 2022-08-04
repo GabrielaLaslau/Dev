@@ -11,6 +11,5 @@ export default StyleSheet.create({
         marginVertical: 5,
         marginTop: 20,
     },
-
     input: {},
 });

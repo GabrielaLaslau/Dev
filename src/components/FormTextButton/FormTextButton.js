@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+
 import {
     Text,
     Pressable
-} from 'react-native'
+} from 'react-native';
 
 import styles from './FormTextButton.styles';
 
