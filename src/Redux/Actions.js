@@ -9,9 +9,6 @@ const API_URL = 'https://cool-project-backend.herokuapp.com/api/postares';
 const API_URL_register = 'https://cool-project-backend.herokuapp.com/api/auth/local/register';
 const API_URL_connection = 'https://cool-project-backend.herokuapp.com/api/auth/local';
 
-// TODO:
-// salvam jwt in asign storage
-
 export const getUser = () => {
     try {
         return async dispatch => {
